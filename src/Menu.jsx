@@ -12,15 +12,16 @@ export default class Menu extends React.Component {
     }
 
     getMenu(){
-        const access_token = sessionStorage.getItem('access_token')
+        const bearer_token = "Bearer " + localStorage.getItem('access_token')
         $.ajax({
             type: "GET",
             url: origin + '/menu',
             async: true,
             dataType: 'json', //you may use jsonp for cross origin request
             crossDomain: true,
+            
             headers: {
-                "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjgxNDYwNzcsImlhdCI6MTUyODEzMTY3NywidXNlcm5hbWUiOiJtYXJ0aGEiLCJhZG1pbiI6ZmFsc2UsInN1cGVydXNlciI6ZmFsc2V9.h5JWYyw5DzLAgyIa2t5JdW8HrAhjD02O2cKZqGeGgcI",
+                "Authorization": bearer_token,
                 "Access-Control-Allow-Origin": "*",
             },
             success: function (data) {
@@ -28,7 +29,7 @@ export default class Menu extends React.Component {
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log('Unsuccessful request: ' + err.toString());
-            }.bind(this)
+            }
         });
     }
 
