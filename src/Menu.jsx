@@ -5,9 +5,10 @@ import { $, origin } from "./helpers";
 export default class Menu extends React.Component {
     constructor(props){
         super(props)
-        this.state = {menu:''}
-        this.getMenu = this.getMenu.bind(this)
-        this.displayMenu =this.displayMenu.bind(this)
+        this.state = {meals:'', date: ''};
+        this.getMenu = this.getMenu.bind(this);
+        this.displayMenu =this.displayMenu.bind(this);
+        this.getMenu()
     }
 
     getMenu(){
@@ -19,12 +20,11 @@ export default class Menu extends React.Component {
             dataType: 'json', //you may use jsonp for cross origin request
             crossDomain: true,
             headers: {
-                "Authorization": "Bearer " + access_token,
+                "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjgxNDYwNzcsImlhdCI6MTUyODEzMTY3NywidXNlcm5hbWUiOiJtYXJ0aGEiLCJhZG1pbiI6ZmFsc2UsInN1cGVydXNlciI6ZmFsc2V9.h5JWYyw5DzLAgyIa2t5JdW8HrAhjD02O2cKZqGeGgcI",
                 "Access-Control-Allow-Origin": "*",
             },
             success: function (data) {
-                this.setState({ message: data });
-                this.setState({menu: data.menu})
+                this.setState({meals: data.menu.meals, date: data.menu.date});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log('Unsuccessful request: ' + err.toString());
@@ -44,7 +44,7 @@ export default class Menu extends React.Component {
                 markup += "<td>" + meals[i].description + "</td>";
                 markup += "</tr>"
             } 
-            markup += "</tbody"
+            markup += "</tbody></table>"
             var rows = {__html: markup}
             return (
                 <div dangerouslySetInnerHTML={rows} />
@@ -52,28 +52,34 @@ export default class Menu extends React.Component {
         }
         else {
             return (
-                <tr>
-                    <td colSpan="4">No Meals in this Menu</td>
-                </tr>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Meal ID</th>
+                                <th>Meal Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colSpan="4">No Meals in this Menu</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 
             )
         }
     }
 
     displayMenu(){
-        this.getMenu()
-        var message = this.state.message
-        var menu = this.state.menu
-        var meals = [{ 'meal_id': 1, 'name': 'Fish', 'price': 200, 'description': 'Blah blah Tilapia' }, { 'meal_id': 1, 'name': 'Fish', 'price': 200, 'description': 'Blah blah Tilapia' }]
+        var meals = this.state.meals
         return (
             <div>
-                {message ? (
-                    <p>{message}</p>
-                ):
-                (
-                    <p></p>
-                )}
-                <h3>Date: {menu.date}</h3>
+                
+                
                 <this.listMeals meals={meals} />
             </div>
         );
