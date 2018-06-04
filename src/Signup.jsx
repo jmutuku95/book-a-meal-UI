@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { $, origin } from "./helpers";
 
 
@@ -60,11 +59,10 @@ export default class Signup extends React.Component {
                     // persist access token in sessionStorage
                     localStorage.setItem('access_token', data.access_token);
                     console.log(data.message);
-                    location.reload(true)
-                }.bind(this),
+                },
                 error: function (xhr, status, err) {
                     console.log('User Registration Failed: ' + err.toString());
-                }.bind(this)
+                }
             });
         }
         else {
