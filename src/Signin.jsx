@@ -45,8 +45,7 @@ export default class Signin extends React.Component {
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log('Could Not Login: ' + err.toString());
-                this.setState({username:'', password:''})
-            }.bind(this)
+            }
         });
     }
     render(){
