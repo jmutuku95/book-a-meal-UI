@@ -130,7 +130,6 @@ export default class Meal extends React.Component{
 
 		var url = origin + '/meals/' + meal_id;
 		var access_token = "Bearer " + localStorage.getItem('access_token');
-
 		$.ajax({
 			url:url,
 			dataType: 'json',
@@ -152,6 +151,36 @@ export default class Meal extends React.Component{
 
 
 	}
+
+	addToMenu(props){
+		const meal_id = props.meal_id;
+		var date = '';
+		var meal_list = [meal_id];
+
+		var menu_data = {date: date, meal_list: meal_list}
+		var url = origin + '/menu'
+		var access_token = "Bearer " + localStorage.getItem('access_token');
+		$.ajax({
+			url:url,
+			dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(menu_data),
+            async: true,
+            contentType: 'application/json',
+            crossDomain: true,
+            headers: {
+                "Access-Control-Allow-Origin": "",
+                "Authorization": access_token
+            },
+            success: function (data) {
+                alert(data.message)
+            },
+            error: function (xhr, status, err) {
+                console.log('Unsuccessful request: ' + err.toString());
+            }
+		});
+	}	
+
 
 	displayMeals(props){
 		const meals = props.meals;
