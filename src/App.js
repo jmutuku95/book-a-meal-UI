@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Logout from "./Logout";
 import Menu from "./Menu";
+import Meal from "./Meal";
 import { getToken } from "./helpers";
 
 import {
@@ -23,8 +24,22 @@ import {
 class App extends Component {
     constructor(props) {
         super(props)
-        this.state = { access_token: getToken() };
+        this.state = { access_token: getToken(), admin: true };
         this.displayLogin = this.displayLogin.bind(this);
+        this.displayAdminLinks = this.displayAdminLinks.bind(this);
+    }
+
+    displayAdminLinks(){
+        if (this.state.admin){
+            return (
+                <div>
+                    <li><Link to="/meals">Meals</Link></li>
+                </div>
+                );
+        } else {
+            return null;
+        }
+
     }
 
     displayLogin() {
@@ -59,10 +74,10 @@ class App extends Component {
                                         <Link className="navbar-brand" to="/" > Hot Corner Delicacies </Link> 
                                     </div>
                                 <ul className="nav navbar-nav" >
-                                    <li className="active" > < Link to="/" > home </Link></li >
-                                    <li> < Link to="/menu" > menu_ </Link></li >
+                                    <li className="active" > < Link to="/" > Home </Link></li >
+                                    <li> < Link to="/menu" > Menu </Link></li >
                                     <li> < Link to="/orders" > Orders </Link></li >
-                                    <li> < Link to="/admin" > Admin </Link></li >
+                                    <this.displayAdminLinks />
                                 </ul>
                                 <ul className="nav navbar-nav navbar-right" >
                                     <this.displayLogin />
@@ -93,6 +108,7 @@ class App extends Component {
                             <Route path="/signin" component={ Signin } />
                             <Route path="/menu" component={ Menu } />
                             <Route path="/signout" component={ Logout } />
+                            <Route path="/meals" component={ Meal } />
                         </Switch>
                 </div>
             </Router>
