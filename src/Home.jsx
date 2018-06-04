@@ -1,8 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { $, origin } from "./helpers";
-
-
 
 export default class Home extends React.Component {
     constructor() {
@@ -12,6 +9,7 @@ export default class Home extends React.Component {
         // bind to make 'this' work in callback
         this.getWelcomeMessage = this.getWelcomeMessage.bind(this);
         this.getWelcomeMessage();
+        
     }
 
     getWelcomeMessage(){
@@ -27,12 +25,10 @@ export default class Home extends React.Component {
             success: function(data) {
                 this.setState({message: data});
               }.bind(this)
-
             });
-
     }
-
     render() {
+      
       return (
         <div>
             <p className="text-center"><strong>{this.state.message}</strong></p>
