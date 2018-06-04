@@ -1,11 +1,5 @@
 import React from "react";
 import { $, origin } from "./helpers";
-import {
-    //Route,
-    Link,
-    //Switch,
-    // Redirect
-} from 'react-router-dom';
 
 
 export default class Meal extends React.Component{
@@ -69,14 +63,93 @@ export default class Meal extends React.Component{
 
 	handleSubmit(event){
 		event.preventDefault();
+		var name = this.state.name;
+		var price = this.state.price;
+		var description = this.state.description;
+
+		var meal_data = {name: name, price: price, description: description}
+		var url = origin + '/meals'
+		var access_token = "Bearer " + localStorage.getItem('access_token')
+
+		$.ajax({
+			url:url,
+			dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(meal_data),
+            async: true,
+            contentType: 'application/json',
+            crossDomain: true,
+            headers: {
+                "Access-Control-Allow-Origin": "",
+                "Authorization": access_token
+            },
+            success: function (data) {
+                alert(data.message)
+            },
+            error: function (xhr, status, err) {
+                console.log('Unsuccessful request: ' + err.toString());
+            }
+		});
 
 	}
-	handleEdit(event){
-		event.preventDefault();
+	handleEdit(props){
+		var meal_id = props.meal_id;
+		var name = this.state.name;
+		var price = this.state.price;
+		var description = this.state.description;
+
+		var meal_data = {name: name, price: price, description: description}
+
+		var url = origin + '/meals/' + meal_id
+		var access_token = "Bearer " + localStorage.getItem('access_token')
+
+		$.ajax({
+			url:url,
+			dataType: 'json',
+            type: 'PUT',
+            data: {'new_data': meal_data},
+            async: true,
+            contentType: 'application/json',
+            crossDomain: true,
+            headers: {
+                "Access-Control-Allow-Origin": "",
+                "Authorization": access_token
+            },
+            success: function (data) {
+                alert(data.message)
+            },
+            error: function (xhr, status, err) {
+                console.log('Unsuccessful request: ' + err.toString());
+            }
+		});
+
 
 	}
-	handleDelete(event){
-		event.preventDefault();
+	handleDelete(props){
+		var meal_id = props.meal_id;
+
+		var url = origin + '/meals/' + meal_id;
+		var access_token = "Bearer " + localStorage.getItem('access_token');
+
+		$.ajax({
+			url:url,
+			dataType: 'json',
+            type: 'DELETE',
+            async: true,
+            contentType: 'application/json',
+            crossDomain: true,
+            headers: {
+                "Access-Control-Allow-Origin": "",
+                "Authorization": access_token
+            },
+            success: function (data) {
+                alert(data.message)
+            },
+            error: function (xhr, status, err) {
+                console.log('Unsuccessful request: ' + err.toString());
+            }
+		});
+
 
 	}
 
