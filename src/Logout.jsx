@@ -9,8 +9,7 @@ export default class Logout extends React.Component{
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    handleLogout(event){
-        event.preventDefault();
+    handleLogout(){
         localStorage.removeItem('access_token')
     }
 
