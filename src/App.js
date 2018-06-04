@@ -12,7 +12,7 @@ import {
     Route,
     Link,
     Switch,
-    Redirect
+    // Redirect
 } from 'react-router-dom';
 import {
     Grid,
@@ -59,8 +59,8 @@ class App extends Component {
                                         <Link className="navbar-brand" to="/" > Hot Corner Delicacies </Link> 
                                     </div>
                                 <ul className="nav navbar-nav" >
-                                    <li className="active" > < Link to="/" > Home </Link></li >
-                                    <li> < Link to="/menu" > Menu </Link></li >
+                                    <li className="active" > < Link to="/" > home </Link></li >
+                                    <li> < Link to="/menu" > menu_ </Link></li >
                                     <li> < Link to="/orders" > Orders </Link></li >
                                     <li> < Link to="/admin" > Admin </Link></li >
                                 </ul>
@@ -70,8 +70,8 @@ class App extends Component {
                                 </div>
                             </nav>
                         </Row>
-                        <Row className="show-grid"> 
-                            <Home/>
+                        <Row className="show-grid">
+                            <Home />
                         </Row>
                         { !this.state.access_token ? (
                             <Row className="show-grid">
@@ -84,16 +84,15 @@ class App extends Component {
                             </Row>
                         ):(
                             <Row className="show-grid">
-                              <Menu/>
+                              < Menu />
                             </Row>
                             )}
                         </Grid>
                         <Switch >
-                            <Route path="/" exact={ true } component={ App } />
                             <Route path="/signup" component={ Signup } />
                             <Route path="/signin" component={ Signin } />
-                            <Route path="/signout" component={ Logout} />
-                            <Route path="/Menu" component={ Menu } />
+                            <Route path="/menu" component={ Menu } />
+                            <Route path="/signout" component={ Logout } />
                         </Switch>
                 </div>
             </Router>
